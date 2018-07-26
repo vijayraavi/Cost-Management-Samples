@@ -32,10 +32,10 @@ Every Azure subscription has an associated Azure Active Directory (AAD) tenant. 
 
 ### Installation
 
-Clone or download the CostManagementHelloWorld repository.
+Clone or download the Cost Management Samples repository.
 From your shell (ie: Git Bash, etc.) or command line, run the following command :
 
-    git clone https://github.com/Azure-Samples/costmanagement-helloworld-dotnet.git
+    git clone https://github.com/Azure-Samples/Cost-Management-Samples.git
 
 ### Quickstart
 
@@ -45,8 +45,8 @@ You will need to determine a subscription that you own that can be analyzed by t
   2. Click on the "Subscriptions" button within the ribbon on the left hand side of the page. If the button is not present, click the "All Services" button and find the "Subscriptions" button in the tile that gets generated. 
   3. On the Subscriptions page you will see 1 or more subscriptions along with their SubscriptionId. Note the SubscriptionId value for a subscription that has resources created within.
 
-Step 2: Edit and build the sample in Visual Studio.
-After you've downloaded the sample app, you will need to go into the local sub directory in which the Visual Studio solution is stored (typically in <your-git-root-directory>\CostManagementHelloWorld), and open the CostManagementHelloWorld.sln Visual Studio solution. Upon opening, navigate to the app.config file and update the following key/value pair with your SubscriptionId.
+Step 2: Edit and build the project in the 'helloworld-dotnet' folder in Visual Studio.
+After you've downloaded the sample app, you will need to go into the local sub directory in which the Visual Studio solution is stored (typically in <your-git-root-directory>\Cost-Management-Samples\helloworld-dotnet), and open the CostManagementHelloWorld.sln Visual Studio solution. Upon opening, navigate to the app.config file and update the following key/value pair with your SubscriptionId.
 
     <add key="SubscriptionId" value="INSERT SUBSCRIPTION GUID HERE" />
 
