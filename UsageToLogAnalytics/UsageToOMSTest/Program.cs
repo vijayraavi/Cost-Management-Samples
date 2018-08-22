@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using UsageToOMSCore;
+using  Utilities;
 
 namespace UsageToOMSFuncTest
 {
@@ -15,8 +16,9 @@ namespace UsageToOMSFuncTest
     {
         public static void Main(string[] args)
         {
-            string worskpaceid = ""; // put your workspaceid here. Its found in Advanced Settings on Log Analytics page
-            string workspacekey = ""; // put your workspacekey here. Its found in Advanced Settings on Log Analytics page
+            string worskpaceid = CryptoHelper.GetKeyVaultSecret("omsworkspaceid");// put your workspaceid here. Its found in Advanced Settings on Log Analytics page
+            string workspacekey = CryptoHelper.GetKeyVaultSecret("omsworkspacekey");// put your workspacekey here. Its found in Advanced Settings on Log Analytics page
+
             if (string.IsNullOrEmpty(worskpaceid))
             {
                 Console.WriteLine($"OmsWorkspaceId is empty. Cannot proceed further");

@@ -5,13 +5,14 @@ using System.Diagnostics;
 using Microsoft.Azure;
 using System.Collections.Generic;
 using UsageToOMSCore;
+using Utilities;
 
 namespace UsageToOMSFunc
 {
     public static class UsageToOMS
     {        
         [FunctionName("UsageToOMS")]
-        public static void Run([TimerTrigger("0 0 */4 * * *")]TimerInfo myTimer, TraceWriter log)        
+        public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)        
         {
             log.Info($"C# Timer trigger function executed at: {DateTime.Now}");            
             try

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsageToOMSFunc", "UsageToOM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageToOMSFuncTest", "UsageToOMSTest\UsageToOMSFuncTest.csproj", "{E935533E-3995-4E11-A28C-F5DAD74F937F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{9BF0456F-90EB-4425-9690-296752BCBA29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E935533E-3995-4E11-A28C-F5DAD74F937F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E935533E-3995-4E11-A28C-F5DAD74F937F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E935533E-3995-4E11-A28C-F5DAD74F937F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BF0456F-90EB-4425-9690-296752BCBA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF0456F-90EB-4425-9690-296752BCBA29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF0456F-90EB-4425-9690-296752BCBA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF0456F-90EB-4425-9690-296752BCBA29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,9 +8,9 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Azure;
 
-namespace UsageToOMSFunc
+namespace Utilities
 {
-    class CryptoHelper
+    public static class CryptoHelper
     {
         static AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
         public static string GetKeyVaultSecret(string secretNode)
@@ -18,6 +18,6 @@ namespace UsageToOMSFunc
             var secretUri = string.Format("{0}{1}", CloudConfigurationManager.GetSetting("KeyVaultURL"), secretNode);
             var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
             return keyVaultClient.GetSecretAsync(secretUri).Result.Value;
-        } 
+        }
     }
 }

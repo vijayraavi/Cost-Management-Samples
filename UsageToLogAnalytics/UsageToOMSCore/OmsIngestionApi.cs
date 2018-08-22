@@ -68,7 +68,7 @@ namespace UsageToOMSCore
             request.ContentType = contentType;
             request.ContentLength = payload.Length;
             request.Headers.Add(HttpRequestHeader.Authorization, signature);
-            request.Headers.Add("Log-Type", "Usage_CL"); // change the table name if you want
+            request.Headers.Add("Log-Type", "Usage_Prod_CL"); // change the table name if you want
             request.Headers.Add("x-ms-date", date);
             request.Headers.Add("time-generated-field", "EventTime");
                         

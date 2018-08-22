@@ -144,6 +144,10 @@
       <Project>{4d404d03-2a1d-4182-92d8-de05c72e7e21}</Project>
       <Name>UsageToOMSCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{9bf0456f-90eb-4425-9690-296752bcba29}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
