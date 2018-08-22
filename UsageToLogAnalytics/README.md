@@ -37,7 +37,7 @@ You can also use webjobs or cloud services. We are using Function app here.
 This function app runs every 4 hours. You can change the frequency by changing the cron
 expression. This if found in UsageToOMS.cs file.
 
-public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)   
+```public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)```  
 
 The Function App UsageToOMSFunc needs the following secrets to be
 created in KeyVault.
@@ -59,7 +59,7 @@ created in KeyVault.
 5.  Once its created copy the Keyvault url and paste in the
     localsettings.json file in UsageToOMSFunc project. The following settings are needed in localsettings.json.
     LocalSettings file is only for local debugging.The same settings need to be provided in App Settings of the function in the portal.
-    {
+    ```{
       "IsEncrypted": false,
         "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
@@ -71,9 +71,9 @@ created in KeyVault.
         "omsingestionapi": "https://{0}.ods.opinsights.azure.com/api/logs?api-version=2016-04-01"
         }
     }
-
-    For AzureWebJobsDashboard setting to work locally, run the storage emulator. Instructions are found here.
-    https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator
+    
+   For AzureWebJobsDashboard setting to work locally, run the storage emulator. Instructions are found here.
+   https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator
     
 6.  Now let's publish the Function App to Azure.
 
