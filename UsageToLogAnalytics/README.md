@@ -24,7 +24,8 @@ Click Add button and fill the Workspace details.
 ![](media/image3.png)
 
 2\. Enable SqlAuditLogs on the Sql Server Database on the subscription
-you want. You can see that the newly created workspace.
+you want. You can do that by going to the SQL Database and to Diagnostic settings and click "Add diagnostic setting". 
+Here you can see the workspace you created in previous step.
 
 ![](media/image4.png)
 
@@ -33,17 +34,15 @@ you want. You can see that the newly created workspace.
 Once the sql audit logs are being enabled to go into Log Analytics, lets
 work on moving the usage data to Log Analytics.
 
-4\. Get the code from Git Hub and build the application. There are 2
-projects in that solution.
+4. Get the code from Git Hub and build the application. There are 4
+projects in that solution. Function App is one way of invoking the code that is in a class library.
+You can also use webjobs or cloud services. We are using Function app here.
+This function app runs every 4 hours. You can change the frequency by changing the cron
+expression. This if found in UsageToOMS.cs file.
 
-Function App, which is a time, triggered and the core dll. This function
-app runs every 1 hour. You can change the frequency by changing the cron
-expression. This if found in UCDDHourlyToOMS.cs file.
+public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)   
 
-public static void Run(\[TimerTrigger(\"0 0 \*/1 \* \* \*\")\]TimerInfo
-myTimer, TraceWriter log)
-
-The Function App UCDDHourly2OMSFuncApp needs the following secrets to be
+The Function App UsageToOMSFunc needs the following secrets to be
 created in KeyVault.
 
 1.  omsworkspaceid
@@ -58,28 +57,23 @@ created in KeyVault.
 
 3.  ![](media/image6.png)
 
-4.  Get the Connection String of the storage account where the usage
-    data is available.
-
-5.  Open a new browser and go to the KeyVault where you would want to
+4.  Open a new browser and go to the KeyVault where you would want to
     store and create the secrets.
+5.  Once its created copy the Keyvault url and paste in the
+    localsettings.json file in UsageToOMSFunc project.
+6.  Now let's publish the Function App to Azure.
 
-6.  Once its created copy the Keyvault url and paste in the
-    localsettings.json file in UCDDToOMSFun project.
-
-7.  Now let's publish the Function App to Azure.
-
-8. Open the project in VS2017 and find the UCDDToOMSFunc project.
+7. Open the project in VS2017 and find the UsageToOMSFunc project.
 
     ![](media/image7.png)
 
-9. Right click on the project and hit Publish. We first need to create
+8. Right click on the project and hit Publish. We first need to create
     a profile which has the subscription details, Resource Group,
     Storage Account and what APP Service Plan you want to use.
 
    ![](media/image8.png)
 
-10. Click Create new profile
+10. Click "Create new profile"
 
 ![](media/image9.png)
 
@@ -92,10 +86,7 @@ created in KeyVault.
 
 13. ![](media/image11.png)
 
-14. Select the right App Service Plan. If your data size compressed in
-    around 10 MB (gzip compression), then selecting smaller SKUs is not
-    enough for processing. So, pick the size depending on the size of
-    usage data.
+14. Select the right App Service Plan.
 
 ![](media/image12.png)
 
@@ -130,7 +121,7 @@ created in KeyVault.
     Now we need to go to the Keyvault where we stored our secrets and
     give this newly created MSI of Func App access to secrets.
 
-    Go to KeyVault -\> Access policies and click Add New
+    Go to KeyVault -> Access policies and click Add New
 
     ![](media/image18.png)
 
