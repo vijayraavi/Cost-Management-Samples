@@ -14,14 +14,11 @@ Pre-requisites:
 Step 1: Create a Log Analytics workspace in the subscription you want to
 see the usage for
 
-Go to the portal
+Go to the portal and search for Log Analytics in All services. Once you are in Log Analytics,
+Click Add button and fill the Workspace details.
 <https://ms.portal.azure.com/#blade/HubsExtension/Resources/resourceType/Microsoft.OperationalInsights%2Fworkspaces>
 
 ![](media/image2.png)
-
-Click Add button and fill the Workspace details.
-
-![](media/image3.png)
 
 2\. Enable SqlAuditLogs on the Sql Server Database on the subscription
 you want. You can do that by going to the SQL Database and to Diagnostic settings and click "Add diagnostic setting". 
