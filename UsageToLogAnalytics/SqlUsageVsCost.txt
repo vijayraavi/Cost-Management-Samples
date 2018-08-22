@@ -1,0 +1,29 @@
+//Cost Per Query
+let server = "";// Add your server name
+let instance = strcat("SERVERS/",server,"/DATABASES/") ;
+UCDD
+| where InstanceId_s contains instance
+| where MeterId_g == "9995d93a-7d35-4d3f-9c69-7a7fea447ef4" // Network Egress MeterId
+| summarize ConsumedQuantity_d = sum(ConsumedQuantity_d), Cost_d = sum(Cost_d) by InstanceId_s, Date_t, MeterId_g
+| extend TimeGenerated = Date_t
+| summarize EgressCost = sum(Cost_d) by TimeGenerated
+|join (
+    SQLAuditLog_CL
+| where TimeGenerated > ago(30d)
+| where ServerInstanceName_s =~ server
+| project TimeGenerated , Statement_s 
+| summarize count() by bin(TimeGenerated, 1d)
+| extend TotalQueries = count_, QueriesInThousands = count_ / 1000
+| project-away count_
+) on TimeGenerated 
+| join (
+SQLAuditLog_CL
+| where TimeGenerated > ago(30d)
+| where ServerInstanceName_s =~ ""// Add your server name
+| where not(isempty(DatabasePrincipalName_s))
+| summarize count() by bin(TimeGenerated, 1d), DatabasePrincipalName_s
+| extend QueriesPerUser = todecimal(count_), QueriesInThousands = count_ / 1000
+) on TimeGenerated
+| project-away count_
+| extend CostPerQuery = EgressCost/TotalQueries, CostPerUserPct = (QueriesPerUser/TotalQueries) * 100, CostPerUser = (QueriesPerUser/TotalQueries) * EgressCost 
+| project TimeGenerated, User = DatabasePrincipalName_s, toint(QueriesPerUser) , toint(CostPerUser), toint(CostPerUserPct)

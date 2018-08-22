@@ -1,0 +1,13 @@
+//Anomaly
+let server = ""; // Add your server name
+let instance = strcat("SERVERS/",server,"/DATABASES/") ;
+UCDD 
+| where TimeGenerated > ago(30d)
+| extend TimeGenerated = Date_t
+| where MeterId_g == "9995d93a-7d35-4d3f-9c69-7a7fea447ef4" // Egress MeterId
+| summarize QuantityInTenThousands = sum(ConsumedQuantity_d) / 10000 by TimeGenerated
+| summarize TimeGenerated=makelist(TimeGenerated), QuantityInTenThousands=makelist(QuantityInTenThousands)
+| extend series_stats(QuantityInTenThousands), outliers=series_outliers(QuantityInTenThousands)
+| mvexpand TimeGenerated to typeof(datetime), QuantityInTenThousands to typeof(double), outliers to typeof(double)
+| project TimeGenerated , QuantityInTenThousands, Outlier = iif( outliers  > 2 or outliers < -2 , 1, 0) 
+| order by TimeGenerated

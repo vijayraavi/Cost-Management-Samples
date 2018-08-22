@@ -1,0 +1,15 @@
+AzureDiagnostics | where TimeGenerated > ago(30d) | summarize count(), TotalRUs=sum(todecimal(requestCharge_s)) by bin(TimeGenerated, 1d)
+| join (
+    AzureDiagnostics | extend ruCharge = todecimal(requestCharge_s) | summarize count(), TotalRUsPerClient=sum(ruCharge) by bin(TimeGenerated, 1d), clientIpAddress_s
+) on TimeGenerated  
+| extend UsagePct = TotalRUsPerClient/TotalRUs
+| project-away TimeGenerated1
+| order by TimeGenerated asc
+| join kind= inner (
+    UCDD
+| where TimeGenerated > ago(30d)
+| where SubscriptionGuid_g == "" // put your subscriptionId
+| where InstanceId_s == "" // put your InstanceId
+| summarize sum(ConsumedQuantity_d), TotalCost = sum(Cost_d) by TimeGenerated=Date_t | order by TimeGenerated asc | extend TimeGenerated = TimeGenerated
+) on TimeGenerated 
+| project TimeGenerated, clientIpAddress_s , TotalCost, CostPerClient = tostring(TotalCost * UsagePct)

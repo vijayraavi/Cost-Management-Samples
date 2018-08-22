@@ -1,0 +1,21 @@
+//Cost Per Query
+let server = ""; // Put your server Name
+let instance = strcat("SERVERS/",server,"/DATABASES/") ;
+UCDD // This is the function
+| where InstanceId_s contains instance
+| where MeterId_g == "9995d93a-7d35-4d3f-9c69-7a7fea447ef4" // Networking Egress MeterId
+| summarize ConsumedQuantity_d = sum(ConsumedQuantity_d), Cost_d = sum(Cost_d) by InstanceId_s, Date_t, MeterId_g
+| extend TimeGenerated = Date_t
+| summarize EgressCost = sum(Cost_d) by TimeGenerated
+|join (
+    SQLAuditLog_CL
+| where TimeGenerated > ago(30d)
+| where ServerInstanceName_s == server
+| where Statement_s contains "get" 
+| project TimeGenerated , Statement_s 
+| summarize count() by bin(TimeGenerated, 1d)
+| extend Queries = count_, QueriesInThousands = count_ / 1000
+| project-away count_
+) on TimeGenerated 
+| extend CostPerQuery = tostring(EgressCost/Queries)
+| project-away TimeGenerated1, QueriesInThousands 

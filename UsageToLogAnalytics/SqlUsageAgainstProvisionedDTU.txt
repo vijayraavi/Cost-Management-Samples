@@ -1,0 +1,20 @@
+// Potential Savings
+let server = "";// Add your server name
+let database = "";// Add your database name
+let instance = strcat("SERVERS/",server,"/DATABASES/", database) ;
+UCDD
+| where TimeGenerated > ago(30d)
+| where InstanceId_s contains instance
+| summarize ConsumedQuantity_d = sum(ConsumedQuantity_d), Cost_d = sum(Cost_d) by InstanceId_s, Date_t, MeterId_g
+| extend TimeGenerated = Date_t
+| summarize TotalCost = sum(Cost_d) by TimeGenerated
+|join (
+    AzureMetrics
+| where ResourceId contains instance
+| where MetricName == "dtu_consumption_percent"
+| summarize AvgDTUUse = avg(Average) by MetricName, bin(TimeGenerated, 1d)
+) on TimeGenerated 
+| extend AvgActualCost = TotalCost * AvgDTUUse/100
+| extend PotentialSavings = TotalCost - AvgActualCost
+| project-away TimeGenerated1, MetricName  
+| order by TimeGenerated 
