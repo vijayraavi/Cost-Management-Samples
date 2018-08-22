@@ -16,13 +16,14 @@ namespace UsageToOMSCore
     {        
         private static string workspaceid = "";
         private static string workspacekey = "";
-        private static readonly string _enrollmentNumber = "8099099";
-        static string baseurl = "https://consumption.azure.com/v2/enrollments";
+        private static readonly string _enrollmentNumber = CloudConfigurationManager.GetSetting("EnrollmentNumber");
+        static string baseurl = CloudConfigurationManager.GetSetting("AzureBillingUrl");
 
-        public static void StartIngestion(string omsWorkspaceId, string omsWorkspaceKey, TraceWriter log)
+        public static async Task StartIngestion(TraceWriter log)
         {
-            workspaceid = omsWorkspaceId;
-            workspacekey = omsWorkspaceKey;
+            //Save your workspaceid and workspacekey in KeyVault
+            workspaceid = CryptoHelper.GetKeyVaultSecret("omsworkspaceid");
+            workspacekey = CryptoHelper.GetKeyVaultSecret("omsworkspacekey");
             if (string.IsNullOrEmpty(workspaceid))
             {
                 log.Info($"OmsWorkspaceId is empty. Cannot proceed further");
@@ -34,14 +35,15 @@ namespace UsageToOMSCore
                 log.Info($"omsworkspacekey is empty. Cannot proceed further");
                 return;
             }
+          
             log.Info("Sending logs to OMS");
             var oms = new OMSIngestionApi(workspaceid, workspacekey, log);
             HttpClient client = HttpHandler.BuildClient();
-            int count = ProcessQuery(oms, client, GetUsageQueryUrl(), log);
+            int count = await ProcessQuery(oms, client, GetUsageQueryUrl(), log);
             log.Info($"Finished processing files");
         }
 
-        public static int ProcessQuery(OMSIngestionApi oms, HttpClient client, String query, TraceWriter log)
+        private static async Task<int> ProcessQuery(OMSIngestionApi oms, HttpClient client, String query, TraceWriter log)
         {
             try
             {
@@ -69,7 +71,7 @@ namespace UsageToOMSCore
                         break;
                     }
                 }
-                Task.WaitAll(tasks.ToArray());
+               await Task.WhenAll(tasks.ToArray());
                 log.Info($"Final Record Count {count}");
                 return count;
             }
@@ -82,8 +84,9 @@ namespace UsageToOMSCore
 
         public static string GetUsageQueryUrl()
         {
-            DateTime startDate = DateTime.Now.AddMonths(-35);
-            DateTime endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            // The public api supports only 3 years of data.
+            DateTime startDate = DateTime.UtcNow.AddMonths(-35);
+            DateTime endDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day);
             return $"{baseurl}/{_enrollmentNumber}/usagedetailsbycustomdate?startTime={startDate.ToShortDateString()}&endTime={endDate.ToShortDateString()}";
         }
     }
@@ -98,4 +101,5 @@ namespace UsageToOMSCore
         [JsonProperty("data")]
         public T[] data { get; set; }
     }
+    
 }

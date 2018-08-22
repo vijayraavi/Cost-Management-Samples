@@ -4,6 +4,7 @@ using Microsoft.Azure.WebJobs.Host;
 using System.Diagnostics;
 using Microsoft.Azure;
 using System.Collections.Generic;
+using System.Threading;
 using UsageToOMSCore;
 using Utilities;
 
@@ -14,26 +15,17 @@ namespace UsageToOMSFunc
         [FunctionName("UsageToOMS")]
         public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)        
         {
-            log.Info($"C# Timer trigger function executed at: {DateTime.Now}");            
+            log.Info($"C# Timer trigger function executed at: {DateTime.UtcNow}");            
             try
-            {               
-                string omsworkspaceid = CryptoHelper.GetKeyVaultSecret("omsworkspaceid");
-                string omsworkspacekey = CryptoHelper.GetKeyVaultSecret("omsworkspacekey");  
-                if(string.IsNullOrEmpty(omsworkspaceid))
-                {
-                    log.Info($"OmsWorkspaceId is empty. Cannot proceed further");
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(omsworkspacekey))
-                {
-                    log.Info($"omsworkspacekey is empty. Cannot proceed further");
-                    return;
-                }
-
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+                TimeSpan ts = stopWatch.Elapsed;
                 log.Info($"Processing started at {DateTime.UtcNow.ToString()}");                
-                OmsIngestionProcessor.StartIngestion(omsworkspaceid, omsworkspacekey, log);
-                log.Info($"Finished processing at  {DateTime.UtcNow.ToString()}");               
+                OmsIngestionProcessor.StartIngestion(log).Wait();
+                stopWatch.Stop();
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
+                log.Info($"Finished processing at  {DateTime.UtcNow.ToString()}. Total processing time is {elapsedTime}");               
             }
             catch (Exception ex)
             {                

@@ -9,22 +9,23 @@ using System.Web;
 using System.Globalization;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure;
 
 namespace UsageToOMSCore
 {
     public class OMSIngestionApi
     {
-        private readonly string m_CustomerId;
-        private readonly string m_SharedKey;
+        private readonly string _mWorkspaceid;
+        private readonly string _mWorkspaceKey;
         private readonly TraceWriter m_log;
         private readonly RetryPolicy m_Retry;
 
-        public OMSIngestionApi(string customerId, string sharedKey, TraceWriter log)
+        public OMSIngestionApi(string workspaceid, string workspaceKey, TraceWriter log)
         {
             // Check the shared key is of a valid format
-            Convert.FromBase64String(sharedKey);
-            m_CustomerId = customerId;
-            m_SharedKey = sharedKey;            
+            Convert.FromBase64String(workspaceKey);
+            _mWorkspaceid = workspaceid;
+            _mWorkspaceKey = workspaceKey;            
             m_Retry = RetryPolicy.DefaultFixed;
             m_log = log;
         }
@@ -35,13 +36,13 @@ namespace UsageToOMSCore
             var stringToHash = string.Format("POST\n{0}\napplication/json\n{1}\n/api/logs", contentLength, xHeaders);
 
             var bytesToHash = Encoding.UTF8.GetBytes(stringToHash);
-            var keyBytes = Convert.FromBase64String(m_SharedKey);
+            var keyBytes = Convert.FromBase64String(_mWorkspaceKey);
 
             using (var sha256 = new System.Security.Cryptography.HMACSHA256(keyBytes))
             {
                 var calculatedHash = sha256.ComputeHash(bytesToHash);
                 var encodedHash = Convert.ToBase64String(calculatedHash);
-                var authorization = string.Format("SharedKey {0}:{1}", m_CustomerId, encodedHash);
+                var authorization = string.Format("SharedKey {0}:{1}", _mWorkspaceid, encodedHash);
                 return authorization;
             }
         }
@@ -54,8 +55,8 @@ namespace UsageToOMSCore
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-
-            string address = string.Format("https://{0}.ods.opinsights.azure.com/api/logs?api-version=2016-04-01", m_CustomerId);
+            
+            string address = string.Format(CloudConfigurationManager.GetSetting("OmsIngestionApi"), _mWorkspaceid);
             Uri uriAddress = new Uri(address);
 
             byte[] payload = Encoding.UTF8.GetBytes(requestBody);

@@ -1,0 +1,12 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "",
+    "KeyVaultURL": "",
+    "AccessTokenSecretName": "",
+    "EnrollmentNumber": "",
+    "AzureBillingUrl": "https://consumption.azure.com/v2/enrollments",
+    "OmsIngestionApi": "https://{0}.ods.opinsights.azure.com/api/logs?api-version=2016-04-01"
+  }
+}

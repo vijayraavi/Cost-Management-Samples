@@ -44,7 +44,7 @@ namespace Utilities
 
         public static string GetAuthorizationHeader()
         {
-            var token = CryptoHelper.GetKeyVaultSecret("ccmaccesstoken");
+            var token = CryptoHelper.GetKeyVaultSecret(CloudConfigurationManager.GetSetting("AccessTokenSecretName"));
             return $"Bearer {token}";
         }
     }

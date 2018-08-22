@@ -16,22 +16,15 @@ namespace UsageToOMSFuncTest
     {
         public static void Main(string[] args)
         {
-            string worskpaceid = CryptoHelper.GetKeyVaultSecret("omsworkspaceid");// put your workspaceid here. Its found in Advanced Settings on Log Analytics page
-            string workspacekey = CryptoHelper.GetKeyVaultSecret("omsworkspacekey");// put your workspacekey here. Its found in Advanced Settings on Log Analytics page
-
-            if (string.IsNullOrEmpty(worskpaceid))
-            {
-                Console.WriteLine($"OmsWorkspaceId is empty. Cannot proceed further");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(workspacekey))
-            {
-                Console.WriteLine($"omsworkspacekey is empty. Cannot proceed further");
-                return;
-            }
             var logger = new TraceWriterStub(TraceLevel.Info);
-            OmsIngestionProcessor.StartIngestion(worskpaceid, workspacekey, logger);
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            TimeSpan ts = stopWatch.Elapsed;
+            OmsIngestionProcessor.StartIngestion(logger).Wait();
+            stopWatch.Stop();
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+            Console.WriteLine(elapsedTime);
+            logger.Info($"Finished processing at  {DateTime.UtcNow.ToString()}. Total time took is {elapsedTime}");
         }
     }
 
