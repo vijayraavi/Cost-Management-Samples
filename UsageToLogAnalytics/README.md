@@ -1,4 +1,4 @@
-[Moving Usage logs to Log Analytics]
+Moving Usage logs to Log Analytics
 
 Scenario: Customers would like to want their usage data to be moved to
 Log Analytics.
@@ -46,71 +46,64 @@ myTimer, TraceWriter log)
 The Function App UCDDHourly2OMSFuncApp needs the following secrets to be
 created in KeyVault.
 
-1.  ucddhourlyconnstring:
-
-    a.  The connection string of the storage account where the usage
-        data was stored.
-
-2.  Ucddhourlyblobcontainername: The blob container name
-
-3.  omsworkspaceid
+1.  omsworkspaceid
 
     i.  The oms workspaceId can be found in the advanced settings of the
         Log Analytics
 
-4.  omsworkspacekey
+2.  omsworkspacekey
 
     ii. This is the Primary key that can be found in the advanced
         settings of Log Analytics
 
-5.  ![](media/image6.png)
+3.  ![](media/image6.png)
 
-6.  Get the Connection String of the storage account where the usage
+4.  Get the Connection String of the storage account where the usage
     data is available.
 
-7.  Open a new browser and go to the KeyVault where you would want to
+5.  Open a new browser and go to the KeyVault where you would want to
     store and create the secrets.
 
-8.  Once its created copy the Keyvault url and paste in the
+6.  Once its created copy the Keyvault url and paste in the
     localsettings.json file in UCDDToOMSFun project.
 
-9.  Now let's publish the Function App to Azure.
+7.  Now let's publish the Function App to Azure.
 
-10. Open the project in VS2017 and find the UCDDToOMSFunc project.
+8. Open the project in VS2017 and find the UCDDToOMSFunc project.
 
     ![](media/image7.png)
 
-11. Right click on the project and hit Publish. We first need to create
+9. Right click on the project and hit Publish. We first need to create
     a profile which has the subscription details, Resource Group,
     Storage Account and what APP Service Plan you want to use.
 
    ![](media/image8.png)
 
-12. Click Create new profile
+10. Click Create new profile
 
 ![](media/image9.png)
 
-13. Select Create new Azure Function App
+11. Select Create new Azure Function App
 
 ![](media/image10.png)
 
-14. Give an appropriate name and select the subscription where it has to
+12. Give an appropriate name and select the subscription where it has to
     run.
 
-15. ![](media/image11.png)
+13. ![](media/image11.png)
 
-16. Select the right App Service Plan. If your data size compressed in
+14. Select the right App Service Plan. If your data size compressed in
     around 10 MB (gzip compression), then selecting smaller SKUs is not
     enough for processing. So, pick the size depending on the size of
     usage data.
 
 ![](media/image12.png)
 
-17. Hit Create
+15. Hit Create
 
-18. ![](media/image13.png)
+16. ![](media/image13.png)
 
-19. It starts deploying the host services the Function App needs.
+17. It starts deploying the host services the Function App needs.
 
     ![](media/image14.png)
 
