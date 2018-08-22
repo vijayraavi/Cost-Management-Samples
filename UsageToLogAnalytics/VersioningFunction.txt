@@ -1,0 +1,3 @@
+// Replace the table name accordingly
+Usage_CL 
+| summarize arg_max(TimeGenerated,*) by SubscriptionGuid_g, InstanceId_s, MeterId_g, Tags_s, Date_t
