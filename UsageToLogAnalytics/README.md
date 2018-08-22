@@ -1,9 +1,7 @@
-[Moving Usage logs to Log Analytics]{.underline}
+[Moving Usage logs to Log Analytics]
 
 Scenario: Customers would like to want their usage data to be moved to
 Log Analytics.
-
-![](media/image1.png){width="6.5in" height="4.133333333333334in"}
 
 Pre-requisites:
 
