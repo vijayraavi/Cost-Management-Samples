@@ -57,7 +57,24 @@ created in KeyVault.
 4.  Open a new browser and go to the KeyVault where you would want to
     store and create the secrets.
 5.  Once its created copy the Keyvault url and paste in the
-    localsettings.json file in UsageToOMSFunc project.
+    localsettings.json file in UsageToOMSFunc project. The following settings are needed in localsettings.json.
+    LocalSettings file is only for local debugging.The same settings need to be provided in App Settings of the function in the portal.
+    {
+      "IsEncrypted": false,
+        "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "AzureWebJobsDashboard": "",
+        "KeyVaultURL": "",
+        "accesstokensecretname": "",
+        "enrollmentnumber":  ""       
+        "azurebillingurl": "https://consumption.azure.com/v2/enrollments",
+        "omsingestionapi": "https://{0}.ods.opinsights.azure.com/api/logs?api-version=2016-04-01"
+        }
+    }
+
+    For AzureWebJobsDashboard setting to work locally, run the storage emulator. Instructions are found here.
+    https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator
+    
 6.  Now let's publish the Function App to Azure.
 
 7. Open the project in VS2017 and find the UsageToOMSFunc project.
@@ -104,8 +121,8 @@ created in KeyVault.
 
     Now we need to go the App Settings in the portal for that Function
     App. Whatever settings we have in localsettings.json need to be
-    copied to App Settings. Add "KeyVaultURL" setting.
-
+    copied to App Settings. 
+    
     Next we need to enable Managed Service Identity to give Azure
     Identity to this Func App. Go to Platform Features and find
 
@@ -169,4 +186,4 @@ Now you should see the function under Functions. If you want to see the
 logs, go to the Monitor tab and see the runs.
 
 After a successful run go to your log Analytics and under Custom logs
-you should see "Usage_CL" table.
+you should see "Usage_CL" table. To get the latest data there is a function code in VersioningFunction.txt file.
