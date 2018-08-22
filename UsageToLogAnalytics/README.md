@@ -78,13 +78,13 @@ created in KeyVault.
 
 10. Open the project in VS2017 and find the UCDDToOMSFunc project.
 
-![cid:image001.png\@01D432EF.47473AD0](media/image7.47473AD0)
+    ![](media/image7.png)
 
 11. Right click on the project and hit Publish. We first need to create
     a profile which has the subscription details, Resource Group,
     Storage Account and what APP Service Plan you want to use.
 
-![cid:image002.png\@01D432EF.47473AD0](media/image8.47473AD0)
+   ![](media/image8.png)
 
 12. Click Create new profile
 
@@ -92,27 +92,27 @@ created in KeyVault.
 
 13. Select Create new Azure Function App
 
-![cid:image004.png\@01D432EF.47473AD0](media/image10.47473AD0)
+![](media/image10.png)
 
 14. Give an appropriate name and select the subscription where it has to
     run.
 
-15. ![cid:image005.png\@01D432EF.9BA102A0](media/image11.9BA102A0)
+15. ![](media/image11.png)
 
 16. Select the right App Service Plan. If your data size compressed in
     around 10 MB (gzip compression), then selecting smaller SKUs is not
     enough for processing. So, pick the size depending on the size of
     usage data.
 
-![cid:image006.png\@01D432F1.3A8B45A0](media/image12.3A8B45A0)
+![](media/image12.png)
 
 17. Hit Create
 
-18. ![cid:image008.png\@01D432F1.3A8B45A0](media/image13.3A8B45A0)
+18. ![](media/image13.png)
 
 19. It starts deploying the host services the Function App needs.
 
-    ![cid:image009.png\@01D432F1.41D9FFE0](media/image14.41D9FFE0)
+    ![](media/image14.png)
 
     Once deployment is completed you should be able to see the App
     Service and the FuncApp that got created. The function App is still
@@ -130,7 +130,7 @@ created in KeyVault.
 
     ![](media/image16.png)
 
-    ![cid:image016.png\@01D432F2.53CFF8C0](media/image17.53CFF8C0)
+    ![](media/image17.png)
 
     Hit Save.
 
@@ -139,15 +139,15 @@ created in KeyVault.
 
     Go to KeyVault -\> Access policies and click Add New
 
-    ![cid:image017.png\@01D432F2.B2F03C70](media/image18.B2F03C70)
+    ![](media/image18.png)
 
     And in Select Prinicpal search for Function App.
 
-    ![cid:image018.png\@01D432F2.B2F03C70](media/image19.B2F03C70)
+    ![](media/image19.png)
 
     And select Get and List in Secret permissions.
 
-    ![cid:image019.png\@01D432F2.B2F03C70](media/image20.B2F03C70)
+    ![](media/image20.png)
 
     And don't forget to save it.
 
@@ -158,9 +158,9 @@ created in KeyVault.
     "Application Insights". Pick the correct the subscription and create
     new
 
-    ![cid:image020.png\@01D432F3.12543FE0](media/image21.12543FE0)
+    ![](media/image21.png)
 
-    ![cid:image021.png\@01D432F3.12543FE0](media/image22.12543FE0)
+    ![](media/image22.png)
 
     Once created click on the overview and get the instrumentation key
     and save it somewhere.
@@ -175,14 +175,14 @@ instrumentation key which you copied earlier. And Save the App Settings.
 After few seconds you should see Application Insights in Configured
 features.
 
-![cid:image024.png\@01D432F3.D40BECA0](media/image24.D40BECA0)
+![](media/image24.png)
 
 Now that the Host is setup and Keyvault access is granted lets deploy
 the code from VS2017. Make sure you build the project in release mode
 and right click on publish and select the profile which we created and
 click Publish. You should see the status in Output window
 
-![cid:image025.png\@01D432F4.4246C410](media/image25.4246C410)
+![](media/image25.png)
 
 Now you should see the function under Functions. If you want to see the
 logs, go to the Monitor tab and see the runs.
