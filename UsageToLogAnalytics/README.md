@@ -36,7 +36,7 @@ projects in that solution. Function App is one way of invoking the code that is 
 You can also use webjobs or cloud services. We are using Function app here.
 This function app runs every day at 3 am. You can change the frequency by changing the cron
 expression. Sample cron expressions are found here.
-https://codehollow.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/This if found in UsageToOMS.cs file.
+https://codehollow.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/
 
 ```public static void Run([TimerTrigger("0 0 3 * * *")]TimerInfo myTimer, TraceWriter log) ```  
 
