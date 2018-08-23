@@ -31,13 +31,14 @@ Here you can see the workspace you created in previous step.
 Once the sql audit logs are being enabled to go into Log Analytics, lets
 work on moving the usage data to Log Analytics.
 
-4. Get the code from Git Hub and build the application. There are 4
+3. Get the code from Git Hub and build the application. There are 4
 projects in that solution. Function App is one way of invoking the code that is in a class library.
 You can also use webjobs or cloud services. We are using Function app here.
-This function app runs every 4 hours. You can change the frequency by changing the cron
-expression. This if found in UsageToOMS.cs file.
+This function app runs every day at 3 am. You can change the frequency by changing the cron
+expression. Sample cron expressions are found here.
+https://codehollow.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/This if found in UsageToOMS.cs file.
 
-```public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)```  
+```public static void Run([TimerTrigger("0 0 3 * * *")]TimerInfo myTimer, TraceWriter log) ```  
 
 The Function App UsageToOMSFunc needs the following secrets to be
 created in KeyVault.
@@ -52,11 +53,11 @@ created in KeyVault.
     ii. This is the Primary key that can be found in the advanced
         settings of Log Analytics
 
-3.  ![](media/image6.png)
+  ![](media/image6.png)
 
-4.  Open a new browser and go to the KeyVault where you would want to
+3.  Open a new browser and go to the KeyVault where you would want to
     store and create the secrets.
-5.  Once its created copy the Keyvault url and paste in the
+4.  Once its created copy the Keyvault url and paste in the
     localsettings.json file in UsageToOMSFunc project. The following settings are needed in localsettings.json.
     LocalSettings file is only for local debugging.The same settings need to be provided in App Settings of the function in the portal.
     ```{
@@ -75,9 +76,9 @@ created in KeyVault.
    For AzureWebJobsDashboard setting to work locally, run the storage emulator. Instructions are found here.
    https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator
     
-6.  Now let's publish the Function App to Azure.
+5.  Now let's publish the Function App to Azure.
 
-7. Open the project in VS2017 and find the UsageToOMSFunc project.
+6. Open the project in VS2017 and find the UsageToOMSFunc project.
 
     ![](media/image7.png)
 
