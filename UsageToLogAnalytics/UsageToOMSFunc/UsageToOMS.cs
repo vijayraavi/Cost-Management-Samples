@@ -13,7 +13,9 @@ namespace UsageToOMSFunc
     public static class UsageToOMS
     {        
         [FunctionName("UsageToOMS")]
-        public static void Run([TimerTrigger("0 0 3,7,11,15,19,23 * * *")]TimerInfo myTimer, TraceWriter log)        
+        //Change the schedule as you wish. Here its set to run at 3 am every day
+        // Sample cron expressions.https://codehollow.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/
+        public static void Run([TimerTrigger("0 0 3 * * *")]TimerInfo myTimer, TraceWriter log)        
         {
             log.Info($"C# Timer trigger function executed at: {DateTime.UtcNow}");            
             try

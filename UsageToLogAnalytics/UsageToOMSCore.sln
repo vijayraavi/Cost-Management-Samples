@@ -11,15 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageToOMSFuncTest", "Usage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{9BF0456F-90EB-4425-9690-296752BCBA29}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleLogAnalyticsScripts", "SampleLogAnalyticsScripts", "{14905FBF-F6F2-4F7C-AD98-4451399AE338}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleSampleLogAnalyticsScripts", "SampleSampleLogAnalyticsScripts", "{14905FBF-F6F2-4F7C-AD98-4451399AE338}"
 	ProjectSection(SolutionItems) = preProject
-		LogAnalyticsScripts\AnamolyDetection.txt = LogAnalyticsScripts\AnamolyDetection.txt
-		LogAnalyticsScripts\CostPerClientCosmosDB.txt = LogAnalyticsScripts\CostPerClientCosmosDB.txt
-		LogAnalyticsScripts\CostPerOperationCosmosDb.txt = LogAnalyticsScripts\CostPerOperationCosmosDb.txt
-		LogAnalyticsScripts\CostPerSqlQuery.txt = LogAnalyticsScripts\CostPerSqlQuery.txt
-		LogAnalyticsScripts\SqlUsageAgainstProvisionedDTU.txt = LogAnalyticsScripts\SqlUsageAgainstProvisionedDTU.txt
-		LogAnalyticsScripts\SqlUsageVsCost.txt = LogAnalyticsScripts\SqlUsageVsCost.txt
-		LogAnalyticsScripts\VersioningFunction.txt = LogAnalyticsScripts\VersioningFunction.txt
+		SampleLogAnalyticsScripts\AnamolyDetection.txt = SampleLogAnalyticsScripts\AnamolyDetection.txt
+		SampleLogAnalyticsScripts\CostPerClientCosmosDB.txt = SampleLogAnalyticsScripts\CostPerClientCosmosDB.txt
+		SampleLogAnalyticsScripts\CostPerOperationCosmosDb.txt = SampleLogAnalyticsScripts\CostPerOperationCosmosDb.txt
+		SampleLogAnalyticsScripts\CostPerSqlQuery.txt = SampleLogAnalyticsScripts\CostPerSqlQuery.txt
+		SampleLogAnalyticsScripts\SqlUsageAgainstProvisionedDTU.txt = SampleLogAnalyticsScripts\SqlUsageAgainstProvisionedDTU.txt
+		SampleLogAnalyticsScripts\SqlUsageVsCost.txt = SampleLogAnalyticsScripts\SqlUsageVsCost.txt
+		SampleLogAnalyticsScripts\VersioningFunction.txt = SampleLogAnalyticsScripts\VersioningFunction.txt
 	EndProjectSection
 EndProject
 Global

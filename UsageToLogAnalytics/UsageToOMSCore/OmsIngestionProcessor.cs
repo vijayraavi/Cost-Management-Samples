@@ -39,7 +39,7 @@ namespace UsageToOMSCore
             log.Info("Sending logs to OMS");
             var oms = new OMSIngestionApi(workspaceid, workspacekey, log);
             HttpClient client = HttpHandler.BuildClient();
-            int count = await ProcessQuery(oms, client, GetUsageQueryUrl(), log);
+            int count = await ProcessQuery(oms, client, GetUsageQueryUrl(log), log);
             log.Info($"Finished processing files");
         }
 
@@ -82,12 +82,21 @@ namespace UsageToOMSCore
             }
         }
 
-        public static string GetUsageQueryUrl()
+        public static string GetUsageQueryUrl(TraceWriter log)
         {
-            // The public api supports only 3 years of data.
-            DateTime startDate = DateTime.UtcNow.AddMonths(-35);
-            DateTime endDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day);
-            return $"{baseurl}/{_enrollmentNumber}/usagedetailsbycustomdate?startTime={startDate.ToShortDateString()}&endTime={endDate.ToShortDateString()}";
+            //Getting data for current month. You can change the dates as you like.
+            //Please refer to this https://docs.microsoft.com/en-us/rest/api/billing/enterprise/billing-enterprise-api-usage-detail
+            //and this https://docs.microsoft.com/en-us/azure/billing/billing-enterprise-api
+            //Doing this to load last slice of data for last day of month which spills into next month's first day
+            //For ex:The usage for Aug 31 for 11:30 pm is available on Sep 1st.
+            var today = DateTime.UtcNow;
+            today = (today.Day == 1 ? today.AddDays(-1) : today);
+            DateTime startDate = new DateTime(today.Year, today.Month, 1);
+            DateTime endDate = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
+            string url =
+                $"{baseurl}/{_enrollmentNumber}/usagedetailsbycustomdate?startTime={startDate.ToShortDateString()}&endTime={endDate.ToShortDateString()}";
+            log.Info($"Queried for url: {url}");
+            return url;
         }
     }
     public class JsonResult<T>
