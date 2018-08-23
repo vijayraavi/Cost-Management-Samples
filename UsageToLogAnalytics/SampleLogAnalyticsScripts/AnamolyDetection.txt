@@ -1,4 +1,5 @@
-//Anomaly
+
+//Anomaly detection
 let server = ""; // Add your server name
 let instance = strcat("SERVERS/",server,"/DATABASES/") ;
 UCDD 
