@@ -1,4 +1,4 @@
-Moving Usage logs to Log Analytics
+Users who would like to compare the telemetry data with the cost can do so by moving usage data to Log Analytics. This walkthrough lets users push the usage to Log Analytics. We have provided samples for how to enable telemetry on a Sql Server database.
 
 Scenario: Customers would like to want their usage data to be moved to
 Log Analytics.
