@@ -35,8 +35,7 @@ work on moving the usage data to Log Analytics.
 projects in that solution. Function App is one way of invoking the code that is in a class library.
 You can also use webjobs or cloud services. We are using Function app here.
 This function app runs every day at 3 am. You can change the frequency by changing the cron
-expression. Sample cron expressions are found here.
-https://codehollow.com/2017/02/azure-functions-time-trigger-cron-cheat-sheet/
+expression.
 
 ```public static void Run([TimerTrigger("0 0 3 * * *")]TimerInfo myTimer, TraceWriter log) ```  
 
