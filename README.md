@@ -1,3 +1,13 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+description: "This repository contains samples that showcase various features supported by the Azure Cost Management REST APIs. "
+urlFragment: Cost-Management-Samples
+---
+
 # Cost Management Samples
 
 This repository contains samples that showcase various features supported by the Azure Cost Management REST APIs. 
