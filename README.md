@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 description: "This repository contains samples that showcase various features supported by the Azure Cost Management REST APIs. "
-urlFragment: Cost-Management-Samples
+urlFragment: azure-cost-management-sample-collection
 ---
 
 # Cost Management Samples
